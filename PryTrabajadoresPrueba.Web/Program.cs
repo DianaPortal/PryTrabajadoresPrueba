@@ -1,7 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using PryTrabajadoresPrueba.Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+// *****************************************************************************************
+//CONEXION A LA BASE DE DATOS - SQL SERVER
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// *****************************************************************************************
 
 var app = builder.Build();
 
