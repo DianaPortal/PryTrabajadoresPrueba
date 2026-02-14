@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using PryTrabajadoresPrueba.Domain;
+using PryTrabajadoresPrueba.Domain.Entities;
 
 namespace PryTrabajadoresPrueba.Infrastructure.Data;
 

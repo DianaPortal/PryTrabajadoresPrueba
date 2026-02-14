@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PryTrabajadoresPrueba.Domain;
+namespace PryTrabajadoresPrueba.Domain.Entities;
 
 public partial class Trabajador
 {
