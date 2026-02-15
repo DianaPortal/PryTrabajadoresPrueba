@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
-using PryTrabajadoresPrueba.Domain;
-using PryTrabajadoresPrueba.Domain.Interfaces;
+using PryTrabajadoresPrueba.Application.Interfaces;
+
+using PryTrabajadoresPrueba.Domain.Entities;
 using PryTrabajadoresPrueba.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -19,11 +20,16 @@ namespace PryTrabajadoresPrueba.Infrastructure.Repository
             _context = context;
         }
 
-        public async Task<IEnumerable<Trabajador>>ListarTrabajadores()
+        public async Task<IEnumerable<Trabajador>> ListarTrabajadores(string? nombre, string? sexo)
         {
+            var paramNombre = new SqlParameter("@NombreBusqueda",
+                string.IsNullOrEmpty(nombre) ? (object)DBNull.Value : nombre);
+
+            var paramSexo = new SqlParameter("@SexoBusqueda",
+                string.IsNullOrEmpty(sexo) ? (object)DBNull.Value : sexo);
             //Llamar SP Listar_trabajadores
             return await _context.Trabajadores
-                .FromSqlRaw("EXEC sp_ListarTrabajadores")
+                .FromSqlRaw("EXEC sp_ListarTrabajadores @NombreBusqueda, @SexoBusqueda", paramNombre, paramSexo)
                 .ToListAsync();
         }
 
@@ -80,7 +86,7 @@ namespace PryTrabajadoresPrueba.Infrastructure.Repository
             };
 
             await _context.Database.ExecuteSqlRawAsync("EXEC sp_EditarTrabajador @IdTrb, @Nombres, @Apellidos, @TipoDocumento, @NumeroDocumento, @Sexo, @FechaNacimiento, @FotoUrl, @Direccion", prmt);
-        } 
+        }
 
         // Método para eliminar trabajador
         public async Task EliminarTrabajador(string id)

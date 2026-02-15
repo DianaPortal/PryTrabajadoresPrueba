@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using PryTrabajadoresPrueba.Application.Interfaces;
+using PryTrabajadoresPrueba.Application.Services;
 using PryTrabajadoresPrueba.Infrastructure.Data;
 
-using PryTrabajadoresPrueba.Domain.Interfaces;
+using PryTrabajadoresPrueba.Domain.Entities;
 using PryTrabajadoresPrueba.Infrastructure.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +20,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<ITrabajadorRepository, TrabajadorRepository>();
 //Servicio
 builder.Services.AddScoped<ITrabajadorService, TrabajadorService>();
+
+builder.Services.AddScoped<IFotoService, FotoService>();
 // *****************************************************************************************
 
 var app = builder.Build();

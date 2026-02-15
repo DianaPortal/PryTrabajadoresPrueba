@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using PryTrabajadoresPrueba.Application.Interfaces; 
-using PryTrabajadoresPrueba.Domain.Entities; 
-using System.Collections.Generic; 
-using System.Threading.Tasks; 
+using PryTrabajadoresPrueba.Application.Interfaces;
+using PryTrabajadoresPrueba.Domain.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System;
 
 namespace PryTrabajadoresPrueba.Application.Services
 {
-    public class TrabajadorService : ITrabajadorService 
+    public class TrabajadorService : ITrabajadorService
     {
         private readonly ITrabajadorRepository _trabajadorRepository;
 
@@ -18,9 +18,9 @@ namespace PryTrabajadoresPrueba.Application.Services
         }
 
         //Método para listar trabajadores
-        public async Task<IEnumerable<Trabajador>> ListarTrabajadores()
+        public async Task<IEnumerable<Trabajador>> ListarTrabajadores(string? nombre, string? sexo)
         {
-            return await _trabajadorRepository.ListarTrabajadores();
+            return await _trabajadorRepository.ListarTrabajadores(nombre, sexo);
         }
 
 
@@ -46,7 +46,7 @@ namespace PryTrabajadoresPrueba.Application.Services
             var existente = await _trabajadorRepository.BuscarPorDocumento(trabajador.NumeroDocumento);
             if (existente != null)
                 throw new Exception("Ya existe un trabajador con ese documento");
-           
+
             // Auditoría
             trabajador.FechaRegistro = DateTime.Now;
             trabajador.Activo = true;
@@ -85,21 +85,22 @@ namespace PryTrabajadoresPrueba.Application.Services
                 throw new Exception("No existe el trabajador que se quiere eliminar");
 
             // Validar estado
-            if (!existente.Activo)
+            if (!existente.Activo.HasValue || !existente.Activo.Value)
                 throw new Exception("El trabajador ya está inactivo");
 
             await _trabajadorRepository.EliminarTrabajador(id);
         }
 
         private void ValidarDatos(Trabajador trabajador)
-        {                    
+        {
             // Sexo 
             if (trabajador.Sexo != "M" && trabajador.Sexo != "F")
                 throw new Exception("Sexo inválido, debe ser 'M' o 'F'");
 
             // Edad mínima
-            var edad = DateTime.Today.Year - trabajador.FechaNacimiento.Year;
-            if (trabajador.FechaNacimiento.Date > DateTime.Today.AddYears(-edad)) edad--;
+            var fechaNac = trabajador.FechaNacimiento.ToDateTime(TimeOnly.MinValue);
+            var edad = DateTime.Today.Year - fechaNac.Year;
+            if (fechaNac > DateTime.Today.AddYears(-edad)) edad--;
             if (edad < 18)
                 throw new Exception("El trabajador debe ser mayor de edad");
 
