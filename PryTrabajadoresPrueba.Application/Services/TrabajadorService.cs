@@ -4,6 +4,7 @@ using PryTrabajadoresPrueba.Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using System.Text.RegularExpressions;
 
 namespace PryTrabajadoresPrueba.Application.Services
 {
@@ -103,6 +104,35 @@ namespace PryTrabajadoresPrueba.Application.Services
             if (fechaNac > DateTime.Today.AddYears(-edad)) edad--;
             if (edad < 18)
                 throw new Exception("El trabajador debe ser mayor de edad");
+
+            //Validación de Digitos en Número de Documento
+            switch (trabajador.TipoDocumento)
+            {
+                case "DNI":
+                if(!Regex.IsMatch(trabajador.NumeroDocumento, @"^\d{8}$"))
+                    throw new Exception("El DNI debe tener exactamente 8 dígitos");
+                break;
+
+                case "Pasaporte":
+                if(!Regex.IsMatch(trabajador.NumeroDocumento, @"^[a-zA-Z0-9]{6,9}$"))
+                    throw new Exception("El Pasaporte debe tener entre 6 y 9 caracteres alfanuméricos");
+                break;
+
+                case "Carnet de Extranjería":
+                if (!Regex.IsMatch(trabajador.NumeroDocumento, @"^[a-zA-Z0-9]{9,12}$"))
+                    throw new Exception("El Carnet de Extranjería debe tener entre 9 y 12 caracteres alfanuméricos.");
+                break;
+
+                case "RUC":
+                if (!Regex.IsMatch(trabajador.NumeroDocumento, @"^\d{11}$"))
+                    throw new Exception("El RUC debe tener exactamente 11 dígitos.");
+                break;
+                
+                default:
+                    if(string.IsNullOrEmpty(trabajador.NumeroDocumento))
+                    throw new Exception("El número de documento es obligatorio.");
+                break;
+            }
 
             // Normalización
             trabajador.Nombres = trabajador.Nombres.Trim().ToUpper();

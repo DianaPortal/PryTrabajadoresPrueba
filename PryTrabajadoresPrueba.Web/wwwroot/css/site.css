@@ -8,14 +8,18 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
   position: relative;
   min-height: 100%;
-  
+
 }
 
 body {
@@ -24,16 +28,22 @@ body {
 }
 
 .navbar-brand.custom-color {
-    color: #090633; 
-    font-weight: bold; 
-    font-size: 32px;
-    
+  color: #090633;
+  font-weight: bold;
+  font-size: 32px;
+
 }
-  
+
+.my-swal-size {
+  width: 400px !important;
+  max-width: auto;
+
+}
+
 
 @media (max-width: 750px) {
-    .navbar-brand.custom-color {
-        font-size: 24px; 
-        
-    }
+  .navbar-brand.custom-color {
+    font-size: 24px;
+
+  }
 }

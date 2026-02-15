@@ -154,7 +154,8 @@ namespace PryTrabajadoresPrueba.Web.Controllers
             ViewBag.ListaTipoDocumento = new List<SelectListItem> {
                 new SelectListItem { Value = "DNI", Text = "DNI" },
                 new SelectListItem { Value = "Pasaporte", Text = "Pasaporte" },
-                new SelectListItem { Value = "Carnet de Extranjería", Text = "Carnet de Extranjería" }
+                new SelectListItem { Value = "Carnet de Extranjería", Text = "Carnet de Extranjería" },
+                new SelectListItem { Value = "RUC", Text = "RUC" }
             };
         }
 
