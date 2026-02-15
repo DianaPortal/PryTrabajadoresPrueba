@@ -1,1 +1,172 @@
-﻿
+﻿@using PryTrabajadoresPrueba.Domain.Entities
+@model IEnumerable<Trabajador>
+
+@{
+    ViewData["Title"] = "Listado de Trabajadores";
+}
+
+
+<div class="container mt-4">
+    <!-- Botón para abrir modal para Registrar Trabajador-->
+    <div class="mb-3 text-start">
+        <button class="btn btn-success" onclick="mostrarModal('')">
+            <i class="fa-solid fa-plus"></i> Nuevo Trabajador
+        </button>
+    </div>
+
+    <!-- Filtros de búsqueda -->
+    <form method="get" asp-action="Index" class="mb-4 p-3 bg-light rounded border">
+        <div class="row align-items-end">
+            <div class="col-md-5">
+                <label class="form-label fw-bold">Filtrar por Nombre:</label>
+                <input type="text" name="nombreBusqueda" class="form-control"
+                    placeholder="Buscar por nombre o apellido..."
+                    value="@ViewBag.BusquedaNombre" />
+            </div>
+
+            <div class="col-md-5">
+                <label class="form-label fw-bold d-block">Filtrar por Sexo:</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filtroSexo" value=""
+                        id="sexoTodos" checked="@(string.IsNullOrEmpty(ViewBag.BusquedaSexo))" />
+                    <label class="form-check-label" for="sexoTodos">Todos</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filtroSexo" value="M"
+                        id="sexoM" checked="@(ViewBag.BusquedaSexo == "M")" />
+                    <label class="form-check-label" for="sexoM">Masculino</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filtroSexo" value="F"
+                        id="sexoF" checked="@(ViewBag.BusquedaSexo == "F")" />
+                    <label class="form-check-label" for="sexoF">Femenino</label>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fa-solid fa-search"></i> Buscar
+                </button>
+            </div>
+        </div>
+    </form>
+    
+   <!-- Tabla de Trabajadores -->
+    <div class="table-responsive-lg">
+        <table class="table table-hover table-bordered">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>Foto</th>
+                    <th>Nombres y Apellidos</th>
+                    <th>Tipo Doc.</th>
+                    <th>Documento</th>
+                    <th>Sexo</th>
+                    <th>Fecha Nac.</th>
+                    <th>Dirección</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {                    
+                    // Azul (Primary) para Masculino, Naranja (Warning) para Femenino
+                    string claseFila = (item.Sexo == "M") ? "table-primary" : "table-warning";
+                    
+                    <tr class="@claseFila align-middle">
+                        <td class="text-center">
+                            @if (!string.IsNullOrEmpty(item.FotoUrl))
+                            {
+                                <img src="@item.FotoUrl" alt="Foto" class="rounded-circle" 
+                                     style="width: 50px; height: 50px; object-fit: cover; border: 2px solid white;" />
+                            }
+                            else
+                            {
+                                <span>-</span>
+                            }
+                        </td>
+                        <td>@item.Nombres @item.Apellidos</td>
+                        <td>
+                            @item.TipoDocumento 
+                        </td>
+                        <td>
+                            @item.NumeroDocumento
+                        </td>
+                        <td class="text-center">
+                            @(item.Sexo == "M" ? "Masculino" : "Femenino")
+                        </td>
+                        <td class="text-center">@item.FechaNacimiento.ToString("dd/MM/yyyy")</td>
+                        <td>@item.Direccion</td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-primary" onclick="mostrarModal('@item.IdTrb')" title="Editar">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="eliminar('@item.IdTrb')" title="Eliminar">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- Paginación -->
+    @if (ViewBag.TotalPaginas > 1)
+    {
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item @(ViewBag.PaginaActual == 1 ? "disabled" : "")">
+                    <a class="page-link" 
+                       asp-action="Index" 
+                       asp-route-pagina="@(ViewBag.PaginaActual - 1)"
+                       asp-route-nombreBusqueda="@ViewBag.BusquedaNombre"
+                       asp-route-filtroSexo="@ViewBag.BusquedaSexo">Anterior</a>
+                </li>
+
+                @for (int i = 1; i <= ViewBag.TotalPaginas; i++)
+                {
+                    <li class="page-item @(i == ViewBag.PaginaActual ? "active" : "")">
+                        <a class="page-link" 
+                           asp-action="Index" 
+                           asp-route-pagina="@i"
+                           asp-route-nombreBusqueda="@ViewBag.BusquedaNombre"
+                           asp-route-filtroSexo="@ViewBag.BusquedaSexo">@i</a>
+                    </li>
+                }
+
+                <li class="page-item @(ViewBag.PaginaActual == ViewBag.TotalPaginas ? "disabled" : "")">
+                    <a class="page-link" 
+                       asp-action="Index" 
+                       asp-route-pagina="@(ViewBag.PaginaActual + 1)"
+                       asp-route-nombreBusqueda="@ViewBag.BusquedaNombre"
+                       asp-route-filtroSexo="@ViewBag.BusquedaSexo">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+    }
+</div>
+
+<!-- Modal para Crear/Editar Trabajador -->
+<div class="modal fade" id="modalTrabajador" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="modalLabel">Datos del Trabajador</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body-content">
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/trabajador.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}

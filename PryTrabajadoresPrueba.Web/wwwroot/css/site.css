@@ -15,8 +15,25 @@ html {
 html {
   position: relative;
   min-height: 100%;
+  
 }
 
 body {
   margin-bottom: 60px;
+  background-color: #F4F7FE;
+}
+
+.navbar-brand.custom-color {
+    color: #090633; 
+    font-weight: bold; 
+    font-size: 32px;
+    
+}
+  
+
+@media (max-width: 750px) {
+    .navbar-brand.custom-color {
+        font-size: 24px; 
+        
+    }
 }
