@@ -39,6 +39,18 @@ body {
   max-width: auto;
 
 }
+/*Colorear las filas: azul si es masculino, naranja si es femenino*/
+/* Azul personalizado para Masculino */
+.table-masculino {
+    background-color: #6f98db !important; 
+    color: #fff; 
+}
+
+/* Naranja personalizado para Femenino */
+.table-femenino {
+    background-color: #cfa371 !important; 
+    color: #000; 
+}
 
 
 @media (max-width: 750px) {

@@ -11,7 +11,7 @@
         <div class="row mb-3">
             <label asp-for="Nombres" class="col-md-4 col-form-label">Nombres :</label>
             <div class="col-md-8">
-                <input asp-for="Nombres" class="form-control" />
+                <input asp-for="Nombres" class="form-control" placeholder="Ingrese los Nombres" />
                 <span asp-validation-for="Nombres" class="text-danger small"></span>
             </div>
         </div>
@@ -20,7 +20,7 @@
         <div class="row mb-3">
             <label asp-for="Apellidos" class="col-md-4 col-form-label">Apellidos :</label>
             <div class="col-md-8">
-                <input asp-for="Apellidos" class="form-control" />
+                <input asp-for="Apellidos" class="form-control"  placeholder="Ingrese los Apellidos"/>
                 <span asp-validation-for="Apellidos" class="text-danger small"></span>
             </div>
         </div>
@@ -39,7 +39,7 @@
         <div class="row mb-3">
             <label asp-for="NumeroDocumento" class="col-md-4 col-form-label">Nro Documento :</label>
             <div class="col-md-8">
-                <input asp-for="NumeroDocumento" class="form-control" />
+                <input asp-for="NumeroDocumento" class="form-control" placeholder="Ingrese el Nro. de Documento"/>
             </div>
         </div>
 
@@ -80,7 +80,7 @@
         <div class="row mb-3">
             <label asp-for="Direccion" class="col-md-4 col-form-label">Dirección :</label>
             <div class="col-md-8">
-                <textarea asp-for="Direccion" class="form-control" rows="2"></textarea>
+                <textarea asp-for="Direccion" class="form-control" rows="2" placeholder="Ej. Av. 28 de Julio Nro. 128 - Lima"></textarea>
             </div>
         </div>
 

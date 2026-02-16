@@ -70,7 +70,7 @@
                 @foreach (var item in Model)
                 {                    
                     // Azul (Primary) para Masculino, Naranja (Warning) para Femenino
-                    string claseFila = (item.Sexo == "M") ? "table-primary" : "table-warning";
+                    string claseFila = (item.Sexo == "M") ? "table-masculino" : "table-femenino";
                     
                     <tr class="@claseFila align-middle">
                         <td class="text-center">
