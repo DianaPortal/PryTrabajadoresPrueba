@@ -5,7 +5,7 @@ using PryTrabajadoresPrueba.Infrastructure.Data;
 
 using PryTrabajadoresPrueba.Domain.Entities;
 using PryTrabajadoresPrueba.Infrastructure.Repository;
-
+using PryTrabajadoresPrueba.Infrastructure.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

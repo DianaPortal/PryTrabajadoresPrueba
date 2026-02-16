@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using PryTrabajadoresPrueba.Application.Interfaces;
 using PryTrabajadoresPrueba.Application.DTOs;
 using PryTrabajadoresPrueba.Domain.Entities;
+using PryTrabajadoresPrueba.Infrastructure.Services;
 using System.Text.Json;
 
 namespace PryTrabajadoresPrueba.Web.Controllers

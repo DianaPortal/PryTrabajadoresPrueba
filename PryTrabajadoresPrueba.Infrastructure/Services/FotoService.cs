@@ -1,12 +1,15 @@
 using Microsoft.AspNetCore.Http;
 using PryTrabajadoresPrueba.Application.Interfaces;
 using System.Text.Json;
-namespace PryTrabajadoresPrueba.Application.Services
+using System.Diagnostics.CodeAnalysis;
+
+namespace PryTrabajadoresPrueba.Infrastructure.Services
 {
 
+    [ExcludeFromCodeCoverage]
     public class FotoService : IFotoService
     {
-        private readonly string _apiKey = ""; 
+        private readonly string _apiKey = "26cae24456ad2a9eab21812461f3c470"; 
 
         public async Task<string> SubirFoto(IFormFile foto)
         {
