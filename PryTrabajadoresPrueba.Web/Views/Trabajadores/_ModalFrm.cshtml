@@ -1,5 +1,6 @@
 ﻿@model PryTrabajadoresPrueba.Application.DTOs.TrabajadorDTO
 
+
 <form id="frmTrabajador" enctype="multipart/form-data">
 
     <input type="hidden" asp-for="IdTrb" />
@@ -32,6 +33,7 @@
                 <select asp-for="TipoDocumento" class="form-select" asp-items="ViewBag.ListaTipoDocumento">
                     <option value="">Seleccione...</option>
                 </select>
+                <span asp-validation-for="TipoDocumento" class="text-danger small"></span>
             </div>
         </div>
 
@@ -40,6 +42,7 @@
             <label asp-for="NumeroDocumento" class="col-md-4 col-form-label">Nro Documento :</label>
             <div class="col-md-8">
                 <input asp-for="NumeroDocumento" class="form-control" placeholder="Ingrese el Nro. de Documento"/>
+                <span asp-validation-for="NumeroDocumento" class="text-danger small"></span>
             </div>
         </div>
 
@@ -50,6 +53,7 @@
                 <select asp-for="Sexo" class="form-select" asp-items="ViewBag.ListaSexo">
                     <option value="">Seleccione...</option>
                 </select>
+                <span asp-validation-for="Sexo" class="text-danger small"></span>
             </div>
         </div>
 
@@ -58,6 +62,7 @@
             <label asp-for="FechaNacimiento" class="col-md-4 col-form-label">Fecha Nac :</label>
             <div class="col-md-8">
                 <input asp-for="FechaNacimiento" type="date" class="form-control" />
+                <span asp-validation-for="FechaNacimiento" class="text-danger small"></span>
             </div>
         </div>
 

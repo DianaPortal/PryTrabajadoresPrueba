@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PryTrabajadoresPrueba.Application.DTOs
 {
+    [ExcludeFromCodeCoverage]
     public class TrabajadorDTO
     {
         public string? IdTrb { get; set; }
